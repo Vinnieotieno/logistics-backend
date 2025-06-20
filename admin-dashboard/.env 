@@ -1,0 +1,4 @@
+REACT_APP_API_URL=http://localhost:5000/api
+
+REACT_APP_API_URL=https://globeflight.co.ke/api
+REACT_APP_TINYMCE_API_KEY=n6nmqtos4c4w9toulzor0y8qgkfd5e9lvyxvlrr5u66dczfr

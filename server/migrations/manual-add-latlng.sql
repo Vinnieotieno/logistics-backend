@@ -1,0 +1,3 @@
+ALTER TABLE tracking_updates
+  ADD COLUMN latitude DOUBLE PRECISION,
+  ADD COLUMN longitude DOUBLE PRECISION;

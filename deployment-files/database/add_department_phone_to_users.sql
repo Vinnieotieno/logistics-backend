@@ -1,0 +1,3 @@
+ALTER TABLE users
+  ADD COLUMN department VARCHAR(255),
+  ADD COLUMN phone VARCHAR(50);
