@@ -21,6 +21,7 @@ const Resource = require('./Resource');
 const TeamMember = require('./TeamMember');
 const { TeamMessage, ChatRoom, ChatMessage, EmployeeSurvey, SurveyResponse } = require('./CommunicationModels');
 const Staff = require('./Staff');
+const Feedback = require('./Feedback');
 
 // Additional models for relationships
 const MessageRead = sequelize.define('MessageRead', {
@@ -161,6 +162,10 @@ const defineAssociations = () => {
   
   SurveyResponse.belongsTo(EmployeeSurvey, { foreignKey: 'surveyId', as: 'survey' });
   SurveyResponse.belongsTo(Staff, { foreignKey: 'staffId', as: 'respondent' });
+
+  // Feedback associations
+  Feedback.belongsTo(Staff, { foreignKey: 'processedBy', as: 'processor' });
+  Staff.hasMany(Feedback, { foreignKey: 'processedBy', as: 'processedFeedback' });
 };
 
 // Initialize associations
@@ -191,5 +196,6 @@ module.exports = {
   EmployeeSurvey,
   SurveyResponse,
   MessageRead,
-  ChatRoomMember
+  ChatRoomMember,
+  Feedback
 };

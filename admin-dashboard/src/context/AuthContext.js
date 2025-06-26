@@ -5,7 +5,7 @@ const AuthContext = createContext({});
 
 export const useAuth = () => useContext(AuthContext);
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.REACT_APP_API_URL || 'http://globeflight.co.ke/api';
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {

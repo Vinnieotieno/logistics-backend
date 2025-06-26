@@ -1,4 +1,6 @@
-require('dotenv').config();
+// Environment variables are handled by cPanel in production
+// No need for dotenv in this environment
+
 // Ensure this file starts your backend server and Socket.IO correctly.
 
 const http = require('http');

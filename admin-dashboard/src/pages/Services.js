@@ -42,7 +42,7 @@ import {
 import { styled } from '@mui/material/styles';
 import { toast } from 'react-hot-toast';
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+const API_URL = process.env.REACT_APP_API_URL || "http://globeflight.co.ke/api";
 
 const GradientHeader = styled(Box)(({ theme }) => ({
   background: 'linear-gradient(135deg, #4caf50 0%, #81c784 100%)',

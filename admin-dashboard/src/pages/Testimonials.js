@@ -68,7 +68,7 @@ const QuoteIcon = styled(FormatQuote)(({ theme }) => ({
   right: theme.spacing(2),
 }));
 
-const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_BASE = process.env.REACT_APP_API_URL || 'http://globeflight.co.ke/api';
 
 const Testimonials = () => {
   const [anchorEl, setAnchorEl] = useState(null);

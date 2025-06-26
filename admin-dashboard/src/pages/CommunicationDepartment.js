@@ -70,6 +70,7 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import { format, formatDistanceToNow, isValid, parseISO } from 'date-fns';
 import { useLocation } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   borderRadius: '16px',
@@ -157,6 +158,8 @@ const CommunicationDepartment = () => {
     sentiment: 'neutral',
     category: ''
   });
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedMessage, setSelectedMessage] = useState(null);
 
   const location = useLocation();
 
@@ -187,7 +190,7 @@ const CommunicationDepartment = () => {
 
   const initializeSocket = () => {
     const token = localStorage.getItem('token');
-    const newSocket = io(process.env.REACT_APP_API_URL || 'http://localhost:5000', {
+    const newSocket = io(process.env.REACT_APP_API_URL || 'http://globeflight.co.ke', {
       auth: { token }
     });
 
@@ -502,6 +505,18 @@ const CommunicationDepartment = () => {
     negative: <SentimentDissatisfied sx={{ color: '#f44336' }} />,
     suggestion: <Create sx={{ color: '#2196f3' }} />,
     complaint: <Warning sx={{ color: '#f44336' }} />
+  };
+
+  const handleDeleteMessage = async (messageId) => {
+    try {
+      await axios.delete(`/api/communication/messages/${messageId}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
+      toast.success('Message deleted successfully');
+      fetchTeamMessages(); // Refresh messages list
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to delete message');
+    }
   };
 
   return (

@@ -282,7 +282,7 @@ const Tracking = () => {
   const [createLoading, setCreateLoading] = useState(false)
 
   // Backend API base URL
-  const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:5000/api"
+  const API_BASE = process.env.REACT_APP_API_URL || "http://globeflight.co.ke/api"
 
   // Fetch shipments list
   const fetchShipments = React.useCallback(

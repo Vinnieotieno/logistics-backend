@@ -50,7 +50,7 @@ import {
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.REACT_APP_API_URL || 'http://globeflight.co.ke/api';
 
 const GradientHeader = styled(Box)(({ theme }) => ({
   background: 'linear-gradient(135deg, #1b5e20 0%, #4caf50 100%)',

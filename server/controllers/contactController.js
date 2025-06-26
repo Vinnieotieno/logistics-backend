@@ -534,7 +534,7 @@ const sendContactNotification = async (contact, { services, inquiryType }) => {
             message: contact.message,
             createdAt: contact.createdAt
           },
-          adminUrl: `${process.env.ADMIN_URL || 'http://localhost:3000'}/contacts/${contact.id}`,
+          adminUrl: `${process.env.ADMIN_URL || 'http://globeflight.co.ke/admin'}/contacts/${contact.id}`,
           services: services.join(', '),
           inquiryType: inquiryType ? inquiryType.charAt(0).toUpperCase() + inquiryType.slice(1) : 'General'
         }

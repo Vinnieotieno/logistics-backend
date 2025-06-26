@@ -60,7 +60,7 @@ import { Dialog as MuiDialog, DialogTitle as MuiDialogTitle, DialogContent as Mu
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api"
+const API_URL = process.env.REACT_APP_API_URL || "http://globeflight.co.ke/api"
 
 // Modern Styled Components
 const GlassContainer = styled(Container)(({ theme }) => ({

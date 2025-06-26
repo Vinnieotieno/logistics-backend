@@ -92,7 +92,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AuthProvider>
-          <Router>
+          <Router basename="/admin">
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/" element={

@@ -45,7 +45,7 @@ import {
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
 
-const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_BASE = process.env.REACT_APP_API_URL || 'http://globeflight.co.ke/api';
 
 const GradientHeader = styled(Box)(({ theme }) => ({
   background: 'linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)',

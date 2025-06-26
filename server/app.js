@@ -74,6 +74,7 @@ app.use('/api/dashboard', require('./routes/dashboard'));
 app.use('/api/team', require('./routes/team'));
 app.use('/api/communication', require('./routes/communication'));
 app.use('/api/staff', require('./routes/staff'));
+app.use('/api/feedback', require('./routes/feedback'));
 
 // Simple email API endpoint for frontend compatibility
 app.post('/email-api', async (req, res) => {

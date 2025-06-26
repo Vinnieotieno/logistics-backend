@@ -365,7 +365,7 @@ const requestTestimonialEmail = async (req, res) => {
     const token = crypto.randomBytes(24).toString('hex');
     
     // Construct link
-    const link = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/testimonial/submit?token=${token}&email=${encodeURIComponent(email)}`;
+    const link = `${process.env.FRONTEND_URL || 'http://globeflight.co.ke/admin'}/testimonial/submit?token=${token}&email=${encodeURIComponent(email)}`;
 
     // Send email with the correct format
     await sendEmail({

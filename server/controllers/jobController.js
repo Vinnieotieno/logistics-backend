@@ -607,7 +607,7 @@ const applyToJob = async (req, res) => {
     let resumeUrl = null;
     if (req.file) {
       // Serve resume from /uploads, ensure uploads is statically served in app.js
-      resumeUrl = `${process.env.API_URL?.replace(/\/$/, '') || 'http://localhost:5000'}/uploads/${req.file.filename}`;
+      resumeUrl = `${process.env.API_URL?.replace(/\/$/, '') || 'http://globeflight.co.ke/api'}/uploads/${req.file.filename}`;
     }
 
     const application = await JobApplication.create({
@@ -720,7 +720,7 @@ const getApplications = async (req, res) => {
     });
 
     // Ensure resumeUrl is a full URL and not null/empty
-    const apiUrl = process.env.API_URL?.replace(/\/$/, '') || 'http://localhost:5000';
+    const apiUrl = process.env.API_URL?.replace(/\/$/, '') || 'http://globeflight.co.ke/api';
     const appsWithResumeUrl = applications.map(app => {
       let resumeUrl = app.resumeUrl;
       if (resumeUrl && !resumeUrl.startsWith('http')) {
