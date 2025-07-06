@@ -223,7 +223,7 @@ const Dashboard = () => {
   const fetchStats = useCallback(async () => {
     try {
       const token = localStorage.getItem("token")
-      const response = await fetch("/api/dashboard/stats", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || '/admin/api'}/dashboard/stats`, {
         headers: {
           Authorization: token ? `Bearer ${token}` : undefined,
         },
@@ -252,7 +252,7 @@ const Dashboard = () => {
   const fetchActivities = useCallback(async () => {
     try {
       const token = localStorage.getItem("token")
-      const response = await fetch(`/api/dashboard/recent-activity?limit=${activityLimit}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || '/admin/api'}/dashboard/recent-activity?limit=${activityLimit}`, {
         headers: {
           Authorization: token ? `Bearer ${token}` : undefined,
         },
@@ -279,7 +279,7 @@ const Dashboard = () => {
     setAnalyticsLoading(true)
     try {
       const token = localStorage.getItem("token")
-      const response = await fetch(`/api/dashboard/analytics?period=${analyticsPeriod}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || '/admin/api'}/dashboard/analytics?period=${analyticsPeriod}`, {
         headers: {
           Authorization: token ? `Bearer ${token}` : undefined,
         },
@@ -300,7 +300,7 @@ const Dashboard = () => {
   const fetchNotifications = useCallback(async () => {
     try {
       const token = localStorage.getItem("token")
-      const response = await fetch("/api/dashboard/notifications", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || '/admin/api'}/dashboard/notifications`, {
         headers: {
           Authorization: token ? `Bearer ${token}` : undefined,
         },

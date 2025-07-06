@@ -42,7 +42,7 @@ import {
 import { styled } from '@mui/material/styles';
 import { toast } from 'react-hot-toast';
 
-const API_URL = process.env.REACT_APP_API_URL || "http://globeflight.co.ke/api";
+const API_URL = process.env.REACT_APP_API_URL || "/admin/api";
 
 const GradientHeader = styled(Box)(({ theme }) => ({
   background: 'linear-gradient(135deg, #4caf50 0%, #81c784 100%)',
@@ -372,7 +372,7 @@ const Services = () => {
         <Grid container spacing={3}>
           {services.map((service) => {
             // Compute the correct image URL
-            let imageUrl = '/api/placeholder/400/300';
+            let imageUrl = `${process.env.REACT_APP_API_URL || '/admin/api'}/placeholder/400/300`;
             if (service.imageUrl) {
               imageUrl = service.imageUrl.startsWith('/uploads/')
                 ? `${process.env.REACT_APP_API_URL?.replace('/api', '')}${service.imageUrl}`

@@ -69,7 +69,7 @@ const ContactCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const API_BASE = process.env.REACT_APP_API_URL || 'http://globeflight.co.ke/api';
+const API_BASE = process.env.REACT_APP_API_URL || '/admin/api';
 
 const Contacts = () => {
   // UI state

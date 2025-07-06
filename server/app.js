@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
-const fetch = require('node-fetch'); // Add fetch for Node.js
+// const fetch = require('node-fetch'); // Commented out to reduce memory usage
 require('dotenv').config();
 
 const sequelize = require('./config/database');
@@ -29,7 +29,7 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100 // limit each IP to 100 requests per windowMs
 });
-app.use('/api/', limiter);
+app.use('/admin/api/', limiter);
 
 // CORS configuration
 const corsOptions = {
@@ -60,41 +60,86 @@ if (process.env.NODE_ENV === 'development') {
 const path = require('path');
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
+// Health check for Railway
+app.get('/admin/api/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
+
 // Routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/users', require('./routes/users'));
-app.use('/api/blogs', require('./routes/blogs'));
-app.use('/api/categories', require('./routes/categories'));
-app.use('/api/services', require('./routes/services'));
-app.use('/api/contacts', require('./routes/contacts'));
-app.use('/api/testimonials', require('./routes/testimonials'));
-app.use('/api/jobs', require('./routes/jobs'));
-app.use('/api/tracking', require('./routes/tracking'));
-app.use('/api/dashboard', require('./routes/dashboard'));
-app.use('/api/team', require('./routes/team'));
-app.use('/api/communication', require('./routes/communication'));
-app.use('/api/staff', require('./routes/staff'));
-app.use('/api/feedback', require('./routes/feedback'));
+app.use('/admin/api/auth', require('./routes/auth'));
+app.use('/admin/api/users', require('./routes/users'));
+app.use('/admin/api/blogs', require('./routes/blogs'));
+app.use('/admin/api/categories', require('./routes/categories'));
+app.use('/admin/api/services', require('./routes/services'));
+app.use('/admin/api/contacts', require('./routes/contacts'));
+app.use('/admin/api/testimonials', require('./routes/testimonials'));
+app.use('/admin/api/jobs', require('./routes/jobs'));
+app.use('/admin/api/tracking', require('./routes/tracking'));
+app.use('/admin/api/dashboard', require('./routes/dashboard'));
+app.use('/admin/api/team', require('./routes/team'));
+app.use('/admin/api/communication', require('./routes/communication'));
+app.use('/admin/api/staff', require('./routes/staff'));
+app.use('/admin/api/feedback', require('./routes/feedback'));
 
 // Simple email API endpoint for frontend compatibility
 app.post('/email-api', async (req, res) => {
   try {
-    // Forward the request to the contacts API
-    const response = await fetch(`${req.protocol}://${req.get('host')}/api/contacts/public`, {
+    // Forward the request to the contacts API using built-in http module
+    const http = require('http');
+    const url = require('url');
+    
+    const parsedUrl = url.parse(`${req.protocol}://${req.get('host')}/admin/api/contacts/public`);
+    
+    const postData = JSON.stringify(req.body);
+    
+    const options = {
+      hostname: parsedUrl.hostname,
+      port: parsedUrl.port || (req.protocol === 'https' ? 443 : 80),
+      path: parsedUrl.path,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(req.body),
-    });
-
-    const data = await response.json();
+        'Content-Length': Buffer.byteLength(postData)
+      }
+    };
     
-    if (response.ok) {
-      res.json(data);
-    } else {
-      res.status(response.status).json(data);
-    }
+    const request = http.request(options, (response) => {
+      let data = '';
+      response.on('data', (chunk) => {
+        data += chunk;
+      });
+      response.on('end', () => {
+        try {
+          const jsonData = JSON.parse(data);
+          if (response.statusCode >= 200 && response.statusCode < 300) {
+            res.json(jsonData);
+          } else {
+            res.status(response.statusCode).json(jsonData);
+          }
+        } catch (error) {
+          res.status(500).json({ 
+            success: false, 
+            message: 'Internal server error' 
+          });
+        }
+      });
+    });
+    
+    request.on('error', (error) => {
+      console.error('Email API error:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: 'Internal server error' 
+      });
+    });
+    
+    request.write(postData);
+    request.end();
+    
   } catch (error) {
     console.error('Email API error:', error);
     res.status(500).json({ 

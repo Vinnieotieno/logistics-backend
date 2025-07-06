@@ -56,7 +56,7 @@ import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import debounce from 'lodash.debounce';
 
-const API_BASE = process.env.REACT_APP_API_URL || 'http://globeflight.co.ke/api';
+const API_BASE = process.env.REACT_APP_API_URL || '/admin/api';
 
 const GradientHeader = styled(Box)(({ theme }) => ({
   background: 'linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%)',

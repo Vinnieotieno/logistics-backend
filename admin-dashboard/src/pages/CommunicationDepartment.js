@@ -190,7 +190,7 @@ const CommunicationDepartment = () => {
 
   const initializeSocket = () => {
     const token = localStorage.getItem('token');
-    const newSocket = io(process.env.REACT_APP_API_URL || 'http://globeflight.co.ke', {
+    const newSocket = io(process.env.REACT_APP_API_URL || 'http://globeflight.co.ke/api', {
       auth: { token }
     });
 
@@ -274,7 +274,7 @@ const CommunicationDepartment = () => {
   const fetchTeamMessages = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/communication/messages', {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL || '/admin/api'}/communication/messages`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTeamMessages(response.data.data);
@@ -304,7 +304,7 @@ const CommunicationDepartment = () => {
           formData.append('attachments', file);
         });
       }
-      await axios.post('/api/communication/messages', formData, {
+      await axios.post(`${process.env.REACT_APP_API_URL || '/admin/api'}/communication/messages`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
@@ -331,7 +331,7 @@ const CommunicationDepartment = () => {
   const markMessageAsRead = async (messageId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`/api/communication/messages/${messageId}/read`, {}, {
+      await axios.post(`${process.env.REACT_APP_API_URL || '/admin/api'}/communication/messages/${messageId}/read`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTeamMessages(prev => prev.map(msg => 
@@ -346,7 +346,7 @@ const CommunicationDepartment = () => {
   const fetchChatRooms = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/communication/chat/rooms', {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL || '/admin/api'}/communication/chat/rooms`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setChatRooms(response.data.data);
@@ -362,7 +362,7 @@ const CommunicationDepartment = () => {
   const fetchChatMessages = async (roomId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`/api/communication/chat/rooms/${roomId}/messages`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL || '/admin/api'}/communication/chat/rooms/${roomId}/messages`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       // Ensure messages are sorted oldest to newest
@@ -374,7 +374,7 @@ const CommunicationDepartment = () => {
       // Fetch read receipts for messages in this room
       const messageIds = msgs.map(m => m.id);
       if (messageIds.length > 0) {
-        const readsRes = await axios.post('/api/communication/chat/rooms/read-receipts', { messageIds }, {
+        const readsRes = await axios.post(`${process.env.REACT_APP_API_URL || '/admin/api'}/communication/chat/rooms/read-receipts`, { messageIds }, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setMessageReads(readsRes.data.data || {});
@@ -423,7 +423,7 @@ const CommunicationDepartment = () => {
   const createChatRoom = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post('/api/communication/chat/rooms', roomForm, {
+      await axios.post(`${process.env.REACT_APP_API_URL || '/admin/api'}/communication/chat/rooms`, roomForm, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setRoomDialog(false);
@@ -443,7 +443,7 @@ const CommunicationDepartment = () => {
   const fetchSurveys = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/communication/surveys', {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL || '/admin/api'}/communication/surveys`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSurveys(response.data.data);
@@ -455,7 +455,7 @@ const CommunicationDepartment = () => {
   const createSurvey = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post('/api/communication/surveys', surveyForm, {
+      await axios.post(`${process.env.REACT_APP_API_URL || '/admin/api'}/communication/surveys`, surveyForm, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSurveyDialog(false);
@@ -475,7 +475,7 @@ const CommunicationDepartment = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        `/api/communication/surveys/${selectedSurvey.id}/responses`,
+        `${process.env.REACT_APP_API_URL || '/admin/api'}/communication/surveys/${selectedSurvey.id}/responses`,
         surveyResponse,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -509,7 +509,7 @@ const CommunicationDepartment = () => {
 
   const handleDeleteMessage = async (messageId) => {
     try {
-      await axios.delete(`/api/communication/messages/${messageId}`, {
+      await axios.delete(`${process.env.REACT_APP_API_URL || '/admin/api'}/communication/messages/${messageId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       toast.success('Message deleted successfully');

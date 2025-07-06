@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography, TextField, Button, Rating, Paper, Checkbox, FormControlLabel, Alert } from '@mui/material';
 import axios from 'axios';
 
-const API_BASE = process.env.REACT_APP_API_URL || 'http://globeflight.co.ke/api';
+const API_BASE = process.env.REACT_APP_API_URL || '/admin/api';
 
 const PublicTestimonialForm = () => {
   const params = new URLSearchParams(window.location.search);

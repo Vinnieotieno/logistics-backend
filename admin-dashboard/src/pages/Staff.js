@@ -27,7 +27,7 @@ const Staff = () => {
     setError('');
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('/api/staff', {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL || '/admin/api'}/staff`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setStaffList(res.data.data);
@@ -99,11 +99,11 @@ const Staff = () => {
     try {
       const token = localStorage.getItem('token');
       if (editMode) {
-        await axios.put(`/api/staff/${selectedId}`, form, {
+        await axios.put(`${process.env.REACT_APP_API_URL || '/admin/api'}/staff/${selectedId}`, form, {
           headers: { Authorization: `Bearer ${token}` }
         });
       } else {
-        await axios.post('/api/staff', form, {
+        await axios.post(`${process.env.REACT_APP_API_URL || '/admin/api'}/staff`, form, {
           headers: { Authorization: `Bearer ${token}` }
         });
       }
@@ -119,7 +119,7 @@ const Staff = () => {
     setError('');
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`/api/staff/${id}`, {
+      await axios.delete(`${process.env.REACT_APP_API_URL || '/admin/api'}/staff/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchStaff();

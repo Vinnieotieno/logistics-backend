@@ -161,7 +161,7 @@ const TeamSection = () => {
   const fetchTeamMembers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/team/members', {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL || '/admin/api'}/team/members`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTeamMembers(response.data.data);
@@ -290,10 +290,10 @@ const TeamSection = () => {
         }
       };
       if (editMode) {
-        await axios.put(`/api/staff/${selectedMember.id}`, submitData, config);
+        await axios.put(`${process.env.REACT_APP_API_URL || '/admin/api'}/staff/${selectedMember.id}`, submitData, config);
         setSuccessMessage('Staff member updated successfully');
       } else {
-        await axios.post('/api/staff', submitData, config);
+        await axios.post(`${process.env.REACT_APP_API_URL || '/admin/api'}/staff`, submitData, config);
         setSuccessMessage('Staff member added successfully');
       }
       fetchTeamMembers();
@@ -308,7 +308,7 @@ const TeamSection = () => {
     if (!window.confirm('Are you sure you want to delete this staff member?')) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`/api/staff/${id}`, {
+      await axios.delete(`${process.env.REACT_APP_API_URL || '/admin/api'}/staff/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSuccessMessage('Staff member deleted successfully');
@@ -325,7 +325,7 @@ const TeamSection = () => {
           component="div"
           sx={{
             height: 280,
-            backgroundImage: `url(${member.avatarUrl || '/api/placeholder/400/400'})`,
+            backgroundImage: `url(${member.avatarUrl || `${process.env.REACT_APP_API_URL || '/admin/api'}/placeholder/400/400`})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             position: 'relative'

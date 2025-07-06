@@ -16,7 +16,7 @@ const SurveyResponsesPage = () => {
     const fetchResponses = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch(`/api/communication/surveys/${surveyId}/responses`, {
+        const res = await fetch(`${process.env.REACT_APP_API_URL || '/admin/api'}/communication/surveys/${surveyId}/responses`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();

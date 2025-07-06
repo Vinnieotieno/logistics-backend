@@ -10,7 +10,7 @@ async function createSuperAdmin() {
   try {
     await client.connect();
     
-    const email = 'admin@logistics.com';
+    const email = 'vincentotienoakuku@gmail.com';
     const password = 'AdminPassword123!';
     const hashedPassword = await bcrypt.hash(password, 12);
     
